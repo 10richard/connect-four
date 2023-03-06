@@ -55,7 +55,7 @@ describe Game do
         end
     end
 
-    describe '#validate_choice' do
+    describe '#validate_move' do
         subject(:choice) { described_class.new() }
 
         context 'returns true if choice/move is valid' do
