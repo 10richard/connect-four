@@ -9,10 +9,10 @@ class Board
         board_dup = @board.dup.reverse
 
         catch :valid_move do
-            board_dup.each_with_index do |row, one|
-              row.each_with_index do |pos, two|
-                if two + 1 == move && pos == 'O'
-                    row[two] = player['symbol']
+            board_dup.each do |row|
+              row.each_with_index do |pos, i|
+                if i + 1 == move && pos == 'O'
+                    row[i] = player['symbol']
                     throw :valid_move
                 end
               end
