@@ -65,4 +65,10 @@ class Game < Board
         #check if column is full
         #if column full, then print error and return false
     end
+
+    def game_over?
+        #checks if there are any available positions left on the board (.none? enumerable)
+        #checks if either play is a winner
+        #will return true if above conditions are met, otherwise return false
+    end
 end
