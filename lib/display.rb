@@ -1,7 +1,7 @@
 module Display
 
     def print_board(board)
-        puts '1 2 3 4 5 6 7'
+        puts "BOARD:\n1 2 3 4 5 6 7"
         board.each do |row|
             puts row.join(' ')
         end
