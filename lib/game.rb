@@ -10,7 +10,7 @@ class Game < Board
         @player1 = {'moves' => []}
         @player2 = {'moves' => []}
         @current = nil
-        @game_over = false
+        @game_over = nil
         @board = Board.new()
     end
 
@@ -36,6 +36,11 @@ class Game < Board
         puts 'Player names set'
     end
 
+    def set_player_symbols
+        @player1['symbol'] = @player1['name'][0]
+        @player2['symbol'] = @player2['name'][0]
+    end
+
     def play
         get_names
         @current 
@@ -43,7 +48,7 @@ class Game < Board
             print_board(@board)
             move = get_move
             modify_board(move, @current)
-            #@gameover = game_over?
+            @gameover = game_over?
             @current == @player1 ? @current = @player2 : @current = @player1
         end
         #check_outcome
@@ -61,14 +66,52 @@ class Game < Board
     end
 
     def validate_move(move)
-        move.between?(1, 7)
+        return true if move.between?(1, 7) && !column_full?(move)
         #check if column is full
         #if column full, then print error and return false
+    end
+
+    def column_full?(move)
+        column = @board.map { |row| row[move - 1]}
+
+        #checks if column has no empty spaces ("O")
+        column.none?('O')
     end
 
     def game_over?
         #checks if there are any available positions left on the board (.none? enumerable)
         #checks if either play is a winner
-        #will return true if above conditions are met, otherwise return false
+        #will change @game_over variable to outcome
+        #if there is a winner change the variable to player1 or player2 
+        if check_winner
+            @game_over = @current
+        elsif draw?
+            @game_over = 'draw'
+        end
+    end
+
+    def check_winner
+        #check for horizontal, diagonal and vertical combos
+
+    end
+
+    def draw?
+        @board.each do |row|
+            return false if row.any?('O')
+        end
+        true
+    end
+
+    def check_outcome(outcome)
+        case outcome
+        when 'player1'
+            puts "#{@player1['name']} won!"
+        when 'player2'
+            puts "#{@player2['name']} won!"
+        when 'draw'
+            puts "The board is full... It\'s a draw!"
+        else
+            'what da fuk did you do'
+        end
     end
 end
