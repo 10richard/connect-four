@@ -1,5 +1,5 @@
 class Board
-    attr_accessor 
+    attr_accessor :board
 
     def initialize
         @board = Array.new(6) {Array.new(7) {'O'}}
@@ -20,5 +20,74 @@ class Board
         end
 
         @board = board_dup.reverse
+    end
+
+    def check_winner(current_player)
+        symbol = current_player['symbol']
+        check_horizontal(symbol) || check_vertical(symbol) || check_left_diagonal(symbol) || check_right_diagonal(symbol)
+    end
+
+    def check_horizontal(symbol)
+        #counts amount of consecutive symbols in a row (resets to 0 if symbol is not the same)
+        count = 0
+        @board.each do |row|
+            row.each do |pos|
+                if count == 4
+                    return true
+                elsif pos == symbol
+                    count += 1
+                else
+                    count = 0
+                end
+            end
+        end
+        false 
+    end
+
+    def check_vertical(symbol)
+        count = 0
+        while count < 7
+            column = get_column(count)
+            column.each do |pos|
+                if count == 4
+                    return true
+                elsif pos == symbol
+                    count += 1
+                else
+                    count = 0
+                end
+            end
+            count += 1
+        end
+        false
+    end
+
+    def check_left_diagonal(symbol, row=0, column=0)
+        return false if row > 3
+        return true if @board[row][column] == symbol && @board[row + 1][column + 1] && @board[row + 2][column + 2] && @board[row + 3][column + 3]
+        if column == 4
+            row += 1
+            column = 0
+        end
+        #set column to 0 if == 4
+        check_left_diagonal(symbol, row, column += 1)
+    end
+
+    def check_right_diagonal(symbol, row=0, column=0)
+        return false if row > 3
+        board = @board.dup
+        return true if board[row][column] == symbol && board[row + 1][column + 1] && board[row + 2][column + 2] && board[row + 3][column + 3]
+        if column == 4
+            row += 1
+            column = 0
+        end
+        #reverse board
+        #set column to 0 if == 4
+        check_right_diagonal(symbol, row, column += 1)
+    end
+
+    def get_column(count)
+        column = @board.map { |row| row[count]}
+        column
     end
 end
