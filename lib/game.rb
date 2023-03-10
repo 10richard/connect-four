@@ -6,9 +6,9 @@ class Game < Board
     include Display
 
     def initialize
-        #@player = {'moves' => [], 'symbol' => 'P', 'name' => 'Patrick'}
-        @player1 = {'moves' => []}
-        @player2 = {'moves' => []}
+        #@player = {'name' => 'Patrick', 'symbol' => 'P'}
+        @player1 = {}
+        @player2 = {}
         @current = nil
         @game_over = nil
         @board = Board.new()
@@ -51,7 +51,7 @@ class Game < Board
             @gameover = game_over?
             @current == @player1 ? @current = @player2 : @current = @player1
         end
-        #check_outcome
+        check_outcome
     end
 
     def get_move
@@ -83,16 +83,13 @@ class Game < Board
         #checks if either play is a winner
         #will change @game_over variable to outcome
         #if there is a winner change the variable to player1 or player2 
+
+        #check_winner method is located in board.rb
         if check_winner
             @game_over = @current
         elsif draw?
             @game_over = 'draw'
         end
-    end
-
-    def check_winner
-        #check for horizontal, diagonal and vertical combos
-
     end
 
     def draw?
@@ -102,16 +99,12 @@ class Game < Board
         true
     end
 
-    def check_outcome(outcome)
-        case outcome
-        when 'player1'
-            puts "#{@player1['name']} won!"
-        when 'player2'
-            puts "#{@player2['name']} won!"
+    def check_outcome
+        case @game_over
         when 'draw'
             puts "The board is full... It\'s a draw!"
         else
-            'what da fuk did you do'
+            puts "#{@game_over['name']} won!"
         end
     end
 end
