@@ -17,7 +17,14 @@ module Display
     def name_error(msg)
         {
             'too_many_chars' => 'Names cannot be greater than 10 characters',
-            'same_name' => 'Names cannont be the same'
+            'same_name' => 'Names cannont be the same',
+        }[msg]
+    end
+
+    def game_error(msg)
+        {
+            'column_full' => "Column selected is full\nSelect a different column",
+            'no_column' => "You did not a valid column\nPlease select #1-7"
         }[msg]
     end
 end
