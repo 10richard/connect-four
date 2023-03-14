@@ -24,6 +24,10 @@ class Board
 
     def check_winner(current_player)
         symbol = current_player['symbol']
+        p 'horizontal', check_horizontal(symbol)
+        p 'vertical', check_vertical(symbol)
+        p 'left_diagonal', check_left_diagonal(symbol)
+        p 'right_diagonal', check_right_diagonal(symbol)
         check_horizontal(symbol) || check_vertical(symbol) || check_left_diagonal(symbol) || check_right_diagonal(symbol)
     end
 
@@ -46,17 +50,19 @@ class Board
 
     def check_vertical(symbol)
         count = 0
+        in_a_row = 0
         while count < 7
             column = get_column(count)
             column.each do |pos|
-                if count == 4
+                if in_a_row == 4
                     return true
                 elsif pos == symbol
-                    count += 1
+                    in_a_row += 1
                 else
-                    count = 0
+                    in_a_row = 0
                 end
             end
+            in_a_row = 0
             count += 1
         end
         false
