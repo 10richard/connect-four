@@ -1,3 +1,3 @@
 require './lib/game.rb'
 
-game1 = Game.new().play
+game = Game.new().play
