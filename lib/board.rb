@@ -24,10 +24,6 @@ class Board
 
     def check_winner(current_player)
         symbol = current_player['symbol']
-        p 'horizontal', check_horizontal(symbol)
-        p 'vertical', check_vertical(symbol)
-        p 'left_diagonal', check_left_diagonal(symbol)
-        p 'right_diagonal', check_right_diagonal(symbol)
         check_horizontal(symbol) || check_vertical(symbol) || check_left_diagonal(symbol) || check_right_diagonal(symbol)
     end
 
@@ -69,27 +65,18 @@ class Board
     end
 
     def check_left_diagonal(symbol, row=0, column=0)
-        return false if row > 3
-        return true if @board[row][column] == symbol && @board[row + 1][column + 1] && @board[row + 2][column + 2] && @board[row + 3][column + 3]
-        if column == 4
-            row += 1
+        return false if row > 2
+        return true if @board[row][column] == symbol && @board[row+1][column+1] == symbol && @board[row+2][column+2] == symbol && @board[row+3][column+3] == symbol
+        column += 1
+        if column == 4 
             column = 0
+            row += 1
         end
-        #set column to 0 if == 4
-        check_left_diagonal(symbol, row, column += 1)
+        check_left_diagonal(symbol, row, column)
     end
 
-    def check_right_diagonal(symbol, row=0, column=0)
-        return false if row > 3
-        board = @board.dup
-        return true if board[row][column] == symbol && board[row + 1][column + 1] && board[row + 2][column + 2] && board[row + 3][column + 3]
-        if column == 4
-            row += 1
-            column = 0
-        end
-        #reverse board
-        #set column to 0 if == 4
-        check_right_diagonal(symbol, row, column += 1)
+    def check_right_diagonal(symbol, row=5, column=7)
+
     end
 
     def get_column(count)
