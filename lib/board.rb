@@ -75,8 +75,15 @@ class Board
         check_left_diagonal(symbol, row, column)
     end
 
-    def check_right_diagonal(symbol, row=5, column=7)
-
+    def check_right_diagonal(symbol, row=0, column=6)
+        return false if row > 2
+        return true if @board[row][column] == symbol && @board[row+1][column-1] == symbol && @board[row+2][column-2] == symbol && @board[row+3][column-3] == symbol
+        column -= 1
+        if column < 3
+            column = 6
+            row += 1
+        end
+        check_right_diagonal(symbol, row, column)
     end
 
     def get_column(count)
