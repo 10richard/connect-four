@@ -50,14 +50,13 @@ class Board
         while count < 7
             column = get_column(count)
             column.each do |pos|
-                if in_a_row == 4
-                    return true
-                elsif pos == symbol
+                if pos == symbol
                     in_a_row += 1
                 else
                     in_a_row = 0
                 end
             end
+            return true if in_a_row == 4
             in_a_row = 0
             count += 1
         end
