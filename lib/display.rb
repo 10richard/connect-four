@@ -1,6 +1,7 @@
 module Display
 
     def print_board(board)
+        puts ''
         puts "BOARD:\n1 2 3 4 5 6 7"
         board.each do |row|
             puts row.join(' ')
@@ -10,7 +11,7 @@ module Display
     def instructions(msg, current_player=nil)
         {
             'enter_names' => 'ENTER PLAYER NAMES',
-            'get_move' => "#{current_player}'s turn:\nEnter a column on the board (#1 - 7)",
+            'get_move' => "Enter a column on the board (#1 - 7)\n#{current_player}'s turn:",
         }[msg]
     end
 
@@ -24,7 +25,7 @@ module Display
     def game_error(msg)
         {
             'column_full' => "Column selected is full\nSelect a different column",
-            'no_column' => "You did not a valid column\nPlease select #1-7"
+            'no_column' => "\n**You did not select a valid column**\nPlease enter #1-7"
         }[msg]
     end
 end
