@@ -51,20 +51,20 @@ class Game
         @current 
         until @game_over
             @p_board = @board.board
-            print_board(@p_board)
             move = get_move
             @board.modify_board(move, @current)
             @gameover = game_over?
             @current == @player1 ? @current = @player2 : @current = @player1
         end
-        check_outcome
         print_board(@board.board)
+        check_outcome
     end
 
     def get_move
         #append move to current player's moves list? - use to determine if there is a winner
         got_move = false
         until got_move
+            print_board(@p_board)
             puts instructions('get_move', @current['name'])
             move = gets.chomp.to_i
             got_move = validate_move(move)
@@ -112,7 +112,7 @@ class Game
         when 'draw'
             puts "The board is full... It\'s a draw!"
         else
-            puts "#{@game_over['name']} won!"
+            puts "Four in a row!\n#{@game_over['name']} won!"
         end
     end
 end
